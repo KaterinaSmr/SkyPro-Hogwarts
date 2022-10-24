@@ -13,6 +13,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FacultyServiceTest {
+    /*
     private FacultyService facultyService;
 
     @BeforeEach
@@ -67,4 +68,5 @@ class FacultyServiceTest {
         Faculty actual = facultyService.delete(1l);
         assertEquals(expected, actual);
     }
+    */
 }
