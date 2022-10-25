@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
@@ -36,6 +35,17 @@ public class StudentController {
     @GetMapping(params = "age")
     public Collection<Student> getStudentsByAge(@RequestParam Integer age){
         return studentService.getStudentsByAge(age);
+    }
+
+    @GetMapping(params = {"min", "max"})
+    public Collection<Student> getStudentsByAgeBetween(@RequestParam Integer min,
+                                                       @RequestParam Integer max){
+        return studentService.getStudentsAgeBetween(min, max);
+    }
+
+    @GetMapping("/{id}/faculty")
+    public Faculty getFacultyForStudent(@PathVariable Long id){
+        return studentService.getFaculty(id);
     }
 
     @PostMapping
