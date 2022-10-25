@@ -36,6 +36,9 @@ public class FacultyService {
     }
 
     public Faculty edit (Faculty faculty) {
+        if (get(faculty.getId()) == null){
+            return null;
+        }
         return facultyRepository.save(faculty);
     }
 

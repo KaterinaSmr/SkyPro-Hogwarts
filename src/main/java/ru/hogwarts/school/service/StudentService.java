@@ -32,6 +32,9 @@ public class StudentService {
     }
 
     public Student edit (Student student) {
+        if (get(student.getId()) == null){
+            return null;
+        }
         return studentRepository.save(student);
     }
 

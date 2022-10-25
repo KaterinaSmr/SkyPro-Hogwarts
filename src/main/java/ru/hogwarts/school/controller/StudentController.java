@@ -28,7 +28,7 @@ public class StudentController {
     public ResponseEntity<Student> get(@PathVariable long id){
         Student studentFound = studentService.get(id);
         if (studentFound == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(studentFound);
     }

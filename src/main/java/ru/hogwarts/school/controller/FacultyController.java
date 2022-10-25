@@ -31,7 +31,7 @@ public class FacultyController {
     public ResponseEntity<Faculty> getFaculty(@PathVariable long id){
         Faculty facultyFound = facultyService.get(id);
         if (facultyFound == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(facultyFound);
     }
