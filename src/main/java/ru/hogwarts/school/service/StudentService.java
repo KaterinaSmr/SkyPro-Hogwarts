@@ -27,8 +27,9 @@ public class StudentService {
         return studentRepository.findAllByAgeBetween(min,max);
     }
 
-    public Faculty getFaculty(Long id){
-        return studentRepository.findById(id).get().getFaculty();
+    public Faculty getFaculty(Long studentId){
+        return studentRepository.findById(studentId)
+                .map(Student::getFaculty).orElse(null);
     }
 
     public Student add(Student student){

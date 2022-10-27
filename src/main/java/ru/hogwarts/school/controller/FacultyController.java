@@ -28,9 +28,9 @@ public class FacultyController {
         return facultyService.getFacultiesByColor(color);
     }
 
-    @GetMapping(params = {"name", "color"})
-    public Collection<Faculty> getFacultiesByNameOrColor(@RequestParam String name, @RequestParam String color){
-        return facultyService.getFacultyByNameOrColor(name, color);
+    @GetMapping(params = "nameOrColor")
+    public Collection<Faculty> getFacultiesByNameOrColor(@RequestParam String nameOrColor){
+        return facultyService.getFacultyByNameOrColor(nameOrColor);
     }
 
     @GetMapping("/{id}")
