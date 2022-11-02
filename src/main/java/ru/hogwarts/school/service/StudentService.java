@@ -1,11 +1,11 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -21,6 +21,15 @@ public class StudentService {
 
     public Collection<Student> getStudentsByAge(int age){
         return studentRepository.findByAge(age);
+    }
+
+    public Collection<Student> getStudentsAgeBetween(int min, int max){
+        return studentRepository.findAllByAgeBetween(min,max);
+    }
+
+    public Faculty getFaculty(Long studentId){
+        return studentRepository.findById(studentId)
+                .map(Student::getFaculty).orElse(null);
     }
 
     public Student add(Student student){
