@@ -86,9 +86,8 @@ public class AvatarService {
     private String getFileName(String filePath){
         return filePath.substring(filePath.lastIndexOf("\\")+1);
     }
-    public List<String> getListOfAvatars(int pageNumber, int pageSize) {
+    public List<Avatar> getListOfAvatars(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber-1, pageSize);
-        List<Avatar> avatars = avatarRepository.findAll(pageRequest).getContent();
-        return avatars.stream().map(a -> getFileName(a.getFilePath())).collect(Collectors.toList());
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }
