@@ -82,7 +82,7 @@ public class FacultyControllerTest {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty?color=" + color))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.*", isA(Collection.class)))
+//                .andExpect((ResultMatcher) jsonPath("$.*", isA(Collection.class)))
                 .andExpect(jsonPath("$.*", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(faculties.get(index).getId()))
                 .andExpect(jsonPath("$[0].name").value(faculties.get(index).getName()))
@@ -102,7 +102,7 @@ public class FacultyControllerTest {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/faculty?nameOrColor=" + nameOrColor))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.*", isA(Collection.class)))
+//                .andExpect((ResultMatcher) jsonPath("$.*", isA(Collection.class)))
                 .andExpect(jsonPath("$.*", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(faculties.get(index).getId()))
                 .andExpect(jsonPath("$[0].name").value(faculties.get(index).getName()))
@@ -140,7 +140,7 @@ public class FacultyControllerTest {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/" + facultyId +"/students"))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.*", isA(Collection.class)))
+//                .andExpect((ResultMatcher) jsonPath("$.*", isA(Collection.class)))
                 .andExpect(jsonPath("$.*", hasSize(3)));
     }
 
