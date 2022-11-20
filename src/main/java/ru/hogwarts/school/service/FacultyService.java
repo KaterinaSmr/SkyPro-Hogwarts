@@ -9,6 +9,8 @@ import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
@@ -68,4 +70,17 @@ public class FacultyService {
         facultyRepository.deleteById(id);
     }
 
+    public String getLongestFacultyName() {
+        return facultyRepository.findAll().stream()
+                .map(f -> f.getName())
+                .max(Comparator.comparingInt(String::length))
+                .orElse("");
+    }
+
+    public Integer calculate() {
+        return  Stream.iterate(1, a -> a +1)
+                .limit(1_000_000)
+                .parallel()
+                .reduce(0, (a, b) -> a + b );
+    }
 }
