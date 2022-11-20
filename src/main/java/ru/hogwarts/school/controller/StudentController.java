@@ -40,6 +40,15 @@ public class StudentController {
         return studentService.getLast5Students(offset);
     }
 
+    @GetMapping( "/get-students-name-starts-with")
+    public List<String> getStudentNameStartsWith(@RequestParam Character startsWith){
+        return studentService.getStudentsNameStartsWith(startsWith);
+    }
+
+    @GetMapping("/average-age-new")
+    public Double getAverageAgeNew(){
+        return studentService.getAverageAgeNew();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> get(@PathVariable long id){
