@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class AvatarService {
 
     private final AvatarRepository avatarRepository;
     private final StudentService studentService;
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public AvatarService(AvatarRepository avatarRepository, StudentService studentService) {
         this.avatarRepository = avatarRepository;
@@ -35,10 +38,15 @@ public class AvatarService {
     }
 
     public Optional<Avatar> findByStudentId(Long id) {
+        logger.info("Method findByStudentId was invoked");
         return avatarRepository.findByStudentId(id);
     }
 
     public void uploadAvatar(Long id, MultipartFile file) throws IOException {
+        logger.info("Method uploadAvatar was invoked");
+        if (file.getOriginalFilename() == null){
+            logger.error("File for upload not found");
+        }
         Path filePath = Path.of(avatarsDir, id + "." + getExtension(file.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
@@ -53,6 +61,9 @@ public class AvatarService {
 
         Avatar avatar = findByStudentId(id).orElse(new Avatar());
         Student student = studentService.get(id);
+        if (student == null){
+            logger.error("Student with id " + id + " not found");
+        }
         avatar.setStudent(student);
         avatar.setMediaType(file.getContentType());
         avatar.setFilePath(filePath.toString());
@@ -63,6 +74,7 @@ public class AvatarService {
     }
 
     private byte[] createPreview(Path path) throws IOException{
+        logger.info("Method createPreview was invoked");
         try(InputStream in = Files.newInputStream(path);
             BufferedInputStream bIn = new BufferedInputStream(in, 1024);
             ByteArrayOutputStream bOut = new ByteArrayOutputStream()){
@@ -87,6 +99,7 @@ public class AvatarService {
         return filePath.substring(filePath.lastIndexOf("\\")+1);
     }
     public List<Avatar> getListOfAvatars(int pageNumber, int pageSize) {
+        logger.info("Method getListOfAvatars was invoked");
         PageRequest pageRequest = PageRequest.of(pageNumber-1, pageSize);
         return avatarRepository.findAll(pageRequest).getContent();
     }
