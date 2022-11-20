@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class InfoController {
 
     @Value("${server.port}")
-    private String PORT;
+    private String port;
 
     @GetMapping("/getPort")
     public String getPort(){
-        return PORT;
+        return port;
     }
 
 }
