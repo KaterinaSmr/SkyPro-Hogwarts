@@ -85,4 +85,103 @@ public class StudentService {
         }
         return studentRepository.getLast5Students(offset);
     }
+
+    public void printNamesInMultiThreads() {
+        List<Student> students = (List<Student>) getAllStudents();
+        new Thread(()->{
+            System.out.println(students.get(2).getName());
+            System.out.println(students.get(3).getName());
+        }).start();
+
+        new Thread(()->{
+            System.out.println(students.get(4).getName());
+            System.out.println(students.get(5).getName());
+        }).start();
+
+        System.out.println(students.get(0).getName());
+        System.out.println(students.get(1).getName());
+    }
+
+    public void printNamesInMultiThreadsSync() {
+        List<Student> students = (List<Student>) getAllStudents();
+
+        printStudentName(students.get(0));
+        printStudentName(students.get(1));
+        Thread t1 = new Thread(()->{
+            printStudentName(students.get(2));
+            printStudentName(students.get(3));
+        });
+
+        Thread t2 = new Thread(()->{
+            printStudentName(students.get(4));
+            printStudentName(students.get(5));
+        });
+
+        t1.start();
+        t2.start();
+    }
+
+        private synchronized void printStudentName(Student s){
+        System.out.println(s.getName());
+    }
+
+    public void printNamesInMultiThreadsSyncVersion2() {
+        List<Student> students = (List<Student>) getAllStudents();
+
+        printStudentNameVersion2(students.get(0));
+        printStudentNameVersion2(students.get(1));
+
+        Thread t1 = new Thread(()->{
+            synchronized (students) {
+                printStudentNameVersion2(students.get(2));
+                printStudentNameVersion2(students.get(3));
+            }
+        });
+
+        Thread t2 = new Thread(()->{
+            synchronized (students) {
+                printStudentNameVersion2(students.get(4));
+                printStudentNameVersion2(students.get(5));
+            }
+        });
+
+        t1.start();
+        try {
+            t1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        t2.start();
+    }
+
+    private void printStudentNameVersion2(Student s){
+        System.out.println(s.getName());
+    }
+
+    public void printNamesInMultiThreadsSyncVersion3() {
+        List<Student> students = (List<Student>) getAllStudents();
+        count = 0;
+
+        printStudentNameVersion3(students);
+        printStudentNameVersion3(students);
+        Thread t1 = new Thread(()->{
+            printStudentNameVersion3(students);
+            printStudentNameVersion3(students);
+        });
+
+        Thread t2 = new Thread(()->{
+            printStudentNameVersion3(students);
+            printStudentNameVersion3(students);
+        });
+
+        t1.start();
+        t2.start();
+    }
+
+    private int count;
+
+    private synchronized void printStudentNameVersion3(List<Student> students){
+        System.out.println(students.get(count).getName());
+        count++;
+    }
 }
