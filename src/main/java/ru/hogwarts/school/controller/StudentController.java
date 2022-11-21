@@ -86,6 +86,17 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-
+    @GetMapping("/hw4_6-task1")
+    public void printNamesInMutliThreads(){
+        studentService.printNamesInMultiThreads();
+    }
+    @GetMapping("/hw4_6-task2")
+    public void printNamesInMutliThreadsSync(){
+        studentService.printNamesInMultiThreadsSync();
+    }
+    @GetMapping("/hw4_6-task2-ver2")
+    public void printNamesInMutliThreadsSync2(){
+        studentService.printNamesInMultiThreadsSyncVersion2();
+    }
 
 }
