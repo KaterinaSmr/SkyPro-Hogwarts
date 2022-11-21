@@ -99,4 +99,9 @@ public class StudentController {
         studentService.printNamesInMultiThreadsSyncVersion2();
     }
 
+    @GetMapping("/hw4_6-task2-ver3")
+    public void printNamesInMutliThreadsSync3(){
+        studentService.printNamesInMultiThreadsSyncVersion3();
+    }
+
 }

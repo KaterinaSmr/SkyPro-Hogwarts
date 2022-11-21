@@ -88,7 +88,6 @@ public class StudentService {
 
     public void printNamesInMultiThreads() {
         List<Student> students = (List<Student>) getAllStudents();
-        System.out.println(students);
         new Thread(()->{
             System.out.println(students.get(2).getName());
             System.out.println(students.get(3).getName());
@@ -105,7 +104,6 @@ public class StudentService {
 
     public void printNamesInMultiThreadsSync() {
         List<Student> students = (List<Student>) getAllStudents();
-        System.out.println(students);
 
         printStudentName(students.get(0));
         printStudentName(students.get(1));
@@ -120,18 +118,15 @@ public class StudentService {
         });
 
         t1.start();
-
         t2.start();
-
     }
 
-    private synchronized void printStudentName(Student s){
+        private synchronized void printStudentName(Student s){
         System.out.println(s.getName());
     }
 
     public void printNamesInMultiThreadsSyncVersion2() {
         List<Student> students = (List<Student>) getAllStudents();
-        System.out.println(students);
 
         printStudentNameVersion2(students.get(0));
         printStudentNameVersion2(students.get(1));
@@ -161,5 +156,32 @@ public class StudentService {
 
     private void printStudentNameVersion2(Student s){
         System.out.println(s.getName());
+    }
+
+    public void printNamesInMultiThreadsSyncVersion3() {
+        List<Student> students = (List<Student>) getAllStudents();
+        count = 0;
+
+        printStudentNameVersion3(students);
+        printStudentNameVersion3(students);
+        Thread t1 = new Thread(()->{
+            printStudentNameVersion3(students);
+            printStudentNameVersion3(students);
+        });
+
+        Thread t2 = new Thread(()->{
+            printStudentNameVersion3(students);
+            printStudentNameVersion3(students);
+        });
+
+        t1.start();
+        t2.start();
+    }
+
+    private int count;
+
+    private synchronized void printStudentNameVersion3(List<Student> students){
+        System.out.println(students.get(count).getName());
+        count++;
     }
 }
